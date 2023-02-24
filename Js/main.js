@@ -5,6 +5,8 @@ dos lineas*/
 
 //crear un array objetos:
 //const catalogo = [producto1, producto2, producto3, producto4,producto5,producto6]
+let botonCarrito = document.getElementById("botonCarrito")
+let modalBodyCarrito = document.getElementById("modal-bodyCarrito")
 let guardarProductoBtn = document.getElementById("guardarProductoBtn")
 let buscador = document.getElementById ("buscador")
 let selectOrden = document.getElementById ("selectOrden")
@@ -35,6 +37,7 @@ function mostrarCatalogo(array){
 
 } 
 mostrarCatalogo (catalogo)
+
 let productosEnCarrito = []
 
 if (localStorage.getItem("carrito")) {
@@ -61,7 +64,6 @@ function ordenarMenorMayor(array){
     mostrarCatalogo(menorMayor)
 }
 function ordenarMayorMenor(arr){
-    //ordenar de mayor a menor
     const mayorMenor = [].concat(arr)
     mayorMenor.sort((param1, param2)=>{
         return param2.precio - param1.precio
@@ -88,13 +90,11 @@ function buscarInfo(buscado, producto){
     let busquedaArray = producto.filter(
         (catalogo)=> catalogo.marca.toLowerCase().includes(buscado) || catalogo.producto.toLowerCase().includes(buscado)
     )
-    if(busquedaArray.length == 0){
-        coincidencia.innerHTML = `<h3>No hay coincidencias con su búsqueda</h3>`
-        mostrarCatalogo(busquedaArray)}
-    else {
-        coincidencia.innerHTML = ""
-        mostrarCatalogo(busquedaArray)
-    }
+    busquedaArray.length == 0 ?
+    (coincidencia.innerHTML = `<h3>No hay coincidencias con su búsqueda</h3>`, mostrarCatalogo(busquedaArray)) 
+    :
+    (coincidencia.innerHTML = "", mostrarCatalogo(busquedaArray))
+
     
 }
 
@@ -117,6 +117,27 @@ function cargarProducto(catalogoNuevo){
         inputTipo.value = ""
 }
 
+function cargarProductosCarrito(array){
+    modalBodyCarrito.innerHTML  = ""
+    array.forEach((productos)=>{
+        modalBodyCarrito.innerHTML +=
+        `
+        <div id="${productos.id}" class="card" style="width: 18rem;">
+            <img class="card-img-top img-fluid" style="height: 200px;"src="img/${productos.imagen}" alt="${productos.marca}">
+            <div class="card-body">
+                <h4 class="card-title">${productos.marca}</h4>
+                <p>tipo: ${productos.producto}</p>
+                <p class="">Precio: ${productos.precio}</p>
+            
+            <button class= "btn btn-danger" id="botonEliminar${productos.id}"><i class="fas fa-trash-alt"></i></button>
+            </div>
+        </div>`
+
+    })
+
+}
+
+
 //adjuntar eventos
 guardarProductoBtn.addEventListener("click", ()=>{
     cargarProducto(catalogo)}
@@ -126,6 +147,7 @@ buscador.addEventListener ("input", ()=>{
     console.log (buscador.value)
     buscarInfo (buscador.value, catalogo)
 })
+
 
 selectOrden.addEventListener ("change", () => {
     console.log (selectOrden.value)
@@ -139,6 +161,12 @@ selectOrden.addEventListener ("change", () => {
         mostrarCatalogo(catalogo)
     }
 })
+
+botonCarrito.addEventListener("click", () =>{
+    cargarProductosCarrito(productosEnCarrito)
+})
+
+
 
 
 
