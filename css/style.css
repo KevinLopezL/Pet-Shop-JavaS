@@ -1,0 +1,82 @@
+*{
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+h5{
+    color:red
+}
+
+.fecha{
+    color: green
+}
+
+#titulo{
+    font-size: 36px;
+    color:blue
+}
+
+
+.cards{
+    width: 90%;
+    max-width: 350px;
+    margin: 1rem auto;
+    border: 1px solid black;
+    border-radius: 10%;
+    text-align: center;
+    background-color: white;
+    max-height: 700px;
+}
+
+.cards img{
+    border: 1px solid black;
+    border-radius: 2%;
+    min-width: 250px;
+    width: 100%;
+    height: 300px;
+}
+.content{
+    padding: 1rem;
+    font-size: 1rem;
+
+}
+.content a{
+    padding: 0.5rem;
+    text-decoration: none;
+    color: gray;
+    border: 1px black solid;
+    border-radius: 20%;
+    color: white;
+    background-color: black;
+
+    font-size: 1.25rem;
+
+}
+.content p{
+    padding: 0.25rem;
+}
+.content a:hover{
+    color:red;
+    height: 200%;
+    
+}
+.cards p{
+    font-size: 2rem;
+    height: 50px;
+}
+.precioCard{
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+}
+
+
+.marca{
+    color: red;
+} 
+
+.darkMode {
+    color: rgb(51, 231, 111);
+    background-color: black;
+}
