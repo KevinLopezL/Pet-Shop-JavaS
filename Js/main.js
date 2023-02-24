@@ -50,9 +50,34 @@ if (localStorage.getItem("carrito")) {
 
 
 function agregarAlCarrito (productos) {
+
+    let productoAgregado = productosEnCarrito.find((elem)=>elem.id == productos.id)
+    if(productoAgregado == undefined)
+    {
     console.log(`El producto ${productos.marca} ha sido agregado al carrito. Vale ${productos.precio}`)
     productosEnCarrito.push (productos)
     localStorage.setItem("carrito", JSON.stringify(productosEnCarrito))
+    Swal.fire({
+        title: 'Ha agregado un producto al carrito',
+        icon: "success",
+        confirmButtonColor: "green",
+        confirmButtonText: "Continuar",
+        imageUrl: `img/${productos.imagen}`,
+        imageHeight: 300,
+        //milisegundo por medida
+        timer: 3000
+    })}
+    else {
+        Swal.fire({
+            title: 'El producto ya esta en el carrito',
+            imageUrl: `img/${productos.imagen}`,
+            imageHeight: 100,
+            icon: "info",
+            showConfirmButton: false,
+            timer: 1500,
+            
+        })
+    }
 }
 
 //function de ordenamiento:
@@ -167,6 +192,20 @@ botonCarrito.addEventListener("click", () =>{
 })
 
 
+Toastify({
+    text: "seguinos en instagram",
+    duration: 3000,
+    destination: "https://www.instagram.com/minerva.chlo.e/",
+    newWindow: true,
+    close: true,
+    gravity: "top", // `top` or `bottom`
+    position: "right", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    onClick: function(){} // Callback after click
+  }).showToast();
 
 
 
