@@ -1,17 +1,16 @@
-
-//comentario en una linea
-/*comentario de
-dos lineas*/
-
-//crear un array objetos:
-//const catalogo = [producto1, producto2, producto3, producto4,producto5,producto6]
 let botonCarrito = document.getElementById("botonCarrito")
 let modalBodyCarrito = document.getElementById("modal-bodyCarrito")
 let guardarProductoBtn = document.getElementById("guardarProductoBtn")
 let buscador = document.getElementById ("buscador")
 let selectOrden = document.getElementById ("selectOrden")
+let precioTotal = document.getElementById ("precioTotal")
+let loaderTexto = document.getElementById("loaderTexto")
+let loader = document.getElementById("loader")
+let botonFinalizarCompra = document.getElementById ("botonFinalizarCompra")
+
 function mostrarCatalogo(array){
-    //vaciar Div
+
+
     productosDiv.innerHTML = ""
     for(let productos of array){
         let nuevoProductoDiv = document.createElement("div")
@@ -35,8 +34,15 @@ function mostrarCatalogo(array){
         })
     }
 
+
+
 } 
-mostrarCatalogo (catalogo)
+
+setTimeout(()=>{
+    loaderTexto.remove()
+    loader.remove()
+    mostrarCatalogo(catalogo)
+}, 400)
 
 let productosEnCarrito = []
 
@@ -64,7 +70,6 @@ function agregarAlCarrito (productos) {
         confirmButtonText: "Continuar",
         imageUrl: `img/${productos.imagen}`,
         imageHeight: 300,
-        //milisegundo por medida
         timer: 3000
     })}
     else {
@@ -80,14 +85,18 @@ function agregarAlCarrito (productos) {
     }
 }
 
-//function de ordenamiento:
+function calcularTotal (array) {
+    let  totalCompra = array.reduce ((acc, productosEnCarrito)=>acc + productosEnCarrito.precio, 0)
+    totalCompra == 0 ? precioTotal.innerHTML = `No hay productos en el carrito` : precioTotal.innerHTML = `Total de la compra es de $${totalCompra}`
+    
+}
+
 function ordenarMenorMayor(array){
-    //copiamos array original // concat
     const menorMayor = [].concat(array)
-    //ordena de menor a mayor
     menorMayor.sort((a,b) => a.precio - b.precio)
     mostrarCatalogo(menorMayor)
 }
+
 function ordenarMayorMenor(arr){
     const mayorMenor = [].concat(arr)
     mayorMenor.sort((param1, param2)=>{
@@ -95,6 +104,7 @@ function ordenarMayorMenor(arr){
     })
     mostrarCatalogo(mayorMenor)
 }
+
 function ordenarAlfabeticamente(array){
     const ordenadoAlfabeticamente = [].concat(array)
     ordenadoAlfabeticamente.sort((a,b) => {
@@ -104,13 +114,12 @@ function ordenarAlfabeticamente(array){
         if (a.marca < b.marca) {
             return -1
         }
-        // a must be equal to b
         return 0;
     })
     mostrarCatalogo(ordenadoAlfabeticamente)
 }
 
-//function que busca -- includes encuentra palabras parciales
+
 function buscarInfo(buscado, producto){
     let busquedaArray = producto.filter(
         (catalogo)=> catalogo.marca.toLowerCase().includes(buscado) || catalogo.producto.toLowerCase().includes(buscado)
@@ -131,12 +140,11 @@ function cargarProducto(catalogoNuevo){
         
         const productoNuevo = new Producto(catalogo.length+1, inputMarca.value, inputTipo.value, parseInt(inputPrecio.value), "productoNuevo.jpg")
 
-        //sumarlo a catalogo:
         catalogo.push(productoNuevo)
-        //sumarlo al storage
+
         localStorage.setItem("catalogo", JSON.stringify(catalogoNuevo))
         mostrarCatalogo(catalogoNuevo)
-        //resetear el input
+
         inputMarca.value = ""
         inputPrecio.value = ""
         inputTipo.value = ""
@@ -147,7 +155,7 @@ function cargarProductosCarrito(array){
     array.forEach((productos)=>{
         modalBodyCarrito.innerHTML +=
         `
-        <div id="${productos.id}" class="card" style="width: 18rem;">
+        <div id="productoCarrito${productos.id}" class="card" style="width: 18rem;">
             <img class="card-img-top img-fluid" style="height: 200px;"src="img/${productos.imagen}" alt="${productos.marca}">
             <div class="card-body">
                 <h4 class="card-title">${productos.marca}</h4>
@@ -160,10 +168,31 @@ function cargarProductosCarrito(array){
 
     })
 
+    array.forEach((productoEnCarrito) =>
+
+    document.getElementById(`botonEliminar${productoEnCarrito.id}`).addEventListener("click",()=>{
+        console.log(`El producto eliminado es ${productoEnCarrito.marca}`)
+        let cardProducto = document.getElementById(`productoCarrito${productoEnCarrito.id}`)
+        cardProducto.remove()
+        let productoEliminar = array.find((producto)=> producto.id ==productoEnCarrito.id)
+        console.log(productoEliminar)
+        let posicion = array.indexOf(productoEliminar)
+        console.log(posicion)
+        array.splice(posicion,1)
+        console.log(array)
+        localStorage.setItem("carrito", JSON.stringify(array))
+        calcularTotal(array)
+    })
+    )
+
+    calcularTotal (array)
+}
+
+function finalizarCompra (array){
+    console.log 
 }
 
 
-//adjuntar eventos
 guardarProductoBtn.addEventListener("click", ()=>{
     cargarProducto(catalogo)}
     )
@@ -191,6 +220,8 @@ botonCarrito.addEventListener("click", () =>{
     cargarProductosCarrito(productosEnCarrito)
 })
 
+botonFinalizarCompra.addEventListener("click", ()=>{
+    finalizarCompra()})
 
 Toastify({
     text: "seguinos en instagram",
@@ -198,14 +229,14 @@ Toastify({
     destination: "https://www.instagram.com/minerva.chlo.e/",
     newWindow: true,
     close: true,
-    gravity: "top", // `top` or `bottom`
-    position: "right", // `left`, `center` or `right`
-    stopOnFocus: true, // Prevents dismissing of toast on hover
+    gravity: "top", 
+    position: "right", 
+    stopOnFocus: true, 
     style: {
-      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    background: "linear-gradient(to right, #00b09b, #96c93d)",
     },
-    onClick: function(){} // Callback after click
-  }).showToast();
+    onClick: function(){} 
+}).showToast();
 
 
 

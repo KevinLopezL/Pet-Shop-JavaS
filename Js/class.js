@@ -20,7 +20,7 @@ const producto5 = new Producto(5,"alimento2", "comida",  2200, "alimento2.webp")
 const producto6 = new Producto(6,"alimento3", "comida", 2000, "alimento3.webp")
 
 let catalogo = []
-//condicional que si entra por primera vez aparezcan los productos principales
+
 if (localStorage.getItem("catalogo")){
     catalogo = JSON.parse (localStorage.getItem ("catalogo"))
 } else {
