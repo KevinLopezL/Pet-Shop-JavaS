@@ -253,7 +253,7 @@ botonCarrito.addEventListener("click", () =>{
 })
 
 botonFinalizarCompra.addEventListener("click", ()=>{
-    finalizarCompra()})
+    finalizarCompra(productosEnCarrito)})
 
 Toastify({
     text: "seguinos en instagram",
