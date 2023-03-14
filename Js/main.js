@@ -87,8 +87,21 @@ function agregarAlCarrito (productos) {
 
 function calcularTotal (array) {
     let  totalCompra = array.reduce ((acc, productosEnCarrito)=>acc + productosEnCarrito.precio, 0)
-    totalCompra == 0 ? precioTotal.innerHTML = `No hay productos en el carrito` : precioTotal.innerHTML = `Total de la compra es de $${totalCompra}`
-    
+    if (totalCompra >= 5000) {
+        totalCompra = totalCompra - (totalCompra * 0.05)
+        precioTotal.innerHTML = ` Su compra tiene descuento, el total es de ${totalCompra} y tiene envio gratis`
+    }
+    else if (totalCompra >= 2000) {
+        precioTotal.innerHTML = `el precio final es de $${totalCompra} y tiene envio gratis, gastando $${5000-totalCompra} 
+        mas puede acceder a un descuento`
+    }
+    else if (totalCompra == 0) {
+        precioTotal.innerHTML = `No hay productos en el carrito`
+    }
+    else {
+        precioTotal.innerHTML = `Total de la compra es de $${totalCompra} solo te falta gastar $${2000-totalCompra} para obtener envio gratis`
+    }
+
 }
 
 function ordenarMenorMayor(array){
@@ -188,9 +201,7 @@ function cargarProductosCarrito(array){
     calcularTotal (array)
 }
 
-function finalizarCompra (array){
-    console.log  ("funciona")
-    
+function finalizarCompra (){
         Swal.fire({
             title: 'Está seguro de realizar la compra?',
             icon: 'info',
