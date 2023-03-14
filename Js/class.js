@@ -7,27 +7,32 @@ class Producto {
         this.imagen = imagen 
     };
 }
-const producto1 = new Producto(1,"producto1", "Accesorio", 900, "Accesorio1.webp")
-
-const producto2 = new Producto(2,"producto2", "Accesorio", 4500, "Accesorio2.webp")
-
-const producto3 = new Producto(3,"producto3",  "Accesorio", 2800, "Accesorio3.webp")
-
-const producto4 = new Producto(4,"alimento1", "comida", 1400, "alimento1.webp")
-
-const producto5 = new Producto(5,"alimento2", "comida",  2200, "alimento2.webp")
-
-const producto6 = new Producto(6,"alimento3", "comida", 2000, "alimento3.webp")
 
 let catalogo = []
 
-if (localStorage.getItem("catalogo")){
-    catalogo = JSON.parse (localStorage.getItem ("catalogo"))
-} else {
-    console.log("Entra por primera vez, seteamos array")
-    catalogo.push(producto1, producto2, producto3, producto4,producto5,producto6)
+const cargarProductos = async () => {
+    const response = await fetch("../productos.json")
+    const data = await response.json()
+    console.log (data)
+
+    for (let producto of data){
+        let productoNuevo = new Producto (producto.id, producto.marca, producto.tipo, producto.precio, producto.imagen)
+        catalogo.push (productoNuevo)
+    }
     localStorage.setItem("catalogo", JSON.stringify(catalogo))
 }
+
+
+if (localStorage.getItem("catalogo")){
+    for (let producto of JSON.parse (localStorage.getItem ("catalogo"))){
+        let productoNuevo = new Producto (producto.id, producto.marca, producto.tipo, producto.precio, producto.imagen)
+        catalogo.push (productoNuevo)
+    }
+} else {
+    cargarProductos ()
+}
+
+
 
 
 let productosDiv = document.getElementById ("productos")

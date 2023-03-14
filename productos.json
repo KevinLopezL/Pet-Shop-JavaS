@@ -1,0 +1,46 @@
+
+[
+    {
+        "id": 1,
+        "marca": "Producto 1",
+        "tipo": "Accesorio",
+        "precio": 900,
+        "imagen": "Accesorio1.webp"
+    },
+    {
+        "id": 2,
+        "marca": "Producto 2",
+        "tipo": "Accesorio",
+        "precio": 4500,
+        "imagen": "Accesorio2.webp"
+    },
+    {
+        "id": 3,
+        "marca": "Producto 3",
+        "tipo": "Accesorio",
+        "precio": 2800,
+        "imagen": "Accesorio3.webp"
+    },
+    {
+        "id": 4,
+        "marca": "Alimento 1",
+        "tipo": "Comida",
+        "precio": 1400,
+        "imagen": "alimento1.webp"
+    },
+    {
+        "id": 5,
+        "marca": "Alimento 2",
+        "tipo": "Comida",
+        "precio": 2200,
+        "imagen": "alimento2.webp"
+    },
+    {
+        "id": 6,
+        "marca": "Alimento 3",
+        "tipo": "Comida",
+        "precio": 2000,
+        "imagen": "alimento3.webp"
+    }
+
+]

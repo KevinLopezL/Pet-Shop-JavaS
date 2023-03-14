@@ -200,7 +200,7 @@ function cargarProductosCarrito(array){
 
     calcularTotal (array)
 }
-
+//agregar if
 function finalizarCompra (){
         Swal.fire({
             title: 'Está seguro de realizar la compra?',
